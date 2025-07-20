@@ -150,7 +150,15 @@ async function main(proxy) {
     } finally {
         const proxy = proxies[Math.floor(Math.random() * proxies.length)];
         main(proxy);
-        browser.close();
+        if (browser) { // Fix lỗi browser undefined
+            try {
+                await browser.close();
+            } catch (e) {
+                if(debug == true || debug == "true") {
+                    console.log(`[BROWSER #${lol}] Error closing browser:`, e);
+                }
+            }
+        }
     }
 }
 
