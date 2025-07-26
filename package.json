@@ -1,13 +1,9 @@
 {
-  "name": "attack",
+  "name": "http2-flooder",
   "version": "1.0.0",
+  "description": "HTTP/2 stress test tool",
   "dependencies": {
-    "colors": "",
-    "commander": "",
-    "puppeteer-real-browser": "",
-    "user-agents": "",
-    "request": "",
-    "hpack": "",
-    "chalk": ""
+    "axios": "",
+    "user-agents": ""
   }
 }
