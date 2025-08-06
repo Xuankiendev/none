@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "HTTP/2 stress test tool",
   "dependencies": {
-    "axios": "",
-    "user-agents": ""
+    "colors": ""
   }
 }
